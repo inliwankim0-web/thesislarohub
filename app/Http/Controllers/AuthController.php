@@ -16,23 +16,28 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required|string',
-        ]);
+        // Backend disabled for UI-only deployment.
+        // $credentials = $request->validate([
+        //     'email'    => 'required|email',
+        //     'password' => 'required|string',
+        // ]);
+        //
+        // if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        //     $request->session()->regenerate();
+        //     $user = Auth::user();
+        //
+        //     return match($user->role) {
+        //         'admin' => redirect()->route('admin.dashboard'),
+        //         'staff' => redirect()->route('staff.dashboard'),
+        //         default => redirect()->intended(route('home')),
+        //     };
+        // }
+        //
+        // return back()->withErrors(['email' => 'Invalid email or password.'])->withInput($request->only('email'));
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-            $user = Auth::user();
-
-            return match($user->role) {
-                'admin' => redirect()->route('admin.dashboard'),
-                'staff' => redirect()->route('staff.dashboard'),
-                default => redirect()->intended(route('home')),
-            };
-        }
-
-        return back()->withErrors(['email' => 'Invalid email or password.'])->withInput($request->only('email'));
+        return back()
+            ->withErrors(['email' => 'Login is temporarily disabled for UI-only deployment.'])
+            ->withInput($request->only('email'));
     }
 
     public function showRegister()
@@ -42,28 +47,31 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $validated = $request->validate([
-            'first_name' => 'required|string|max:100',
-            'last_name'  => 'required|string|max:100',
-            'email'      => 'required|email|unique:users,email|max:200',
-            'contact'    => 'required|string|max:20',
-            'password'   => 'required|string|min:8|confirmed',
-            'terms'      => 'accepted',
-        ]);
+        // Backend disabled for UI-only deployment.
+        // $validated = $request->validate([
+        //     'first_name' => 'required|string|max:100',
+        //     'last_name'  => 'required|string|max:100',
+        //     'email'      => 'required|email|unique:users,email|max:200',
+        //     'contact'    => 'required|string|max:20',
+        //     'password'   => 'required|string|min:8|confirmed',
+        //     'terms'      => 'accepted',
+        // ]);
+        //
+        // $user = User::create([
+        //     'first_name' => $validated['first_name'],
+        //     'last_name'  => $validated['last_name'],
+        //     'email'      => $validated['email'],
+        //     'contact'    => $validated['contact'],
+        //     'password'   => Hash::make($validated['password']),
+        //     'role'       => 'renter',
+        // ]);
+        //
+        // Auth::login($user);
+        // $request->session()->regenerate();
+        //
+        // return redirect()->route('home')->with('success', 'Welcome, ' . $user->first_name . '! Your account is ready.');
 
-        $user = User::create([
-            'first_name' => $validated['first_name'],
-            'last_name'  => $validated['last_name'],
-            'email'      => $validated['email'],
-            'contact'    => $validated['contact'],
-            'password'   => Hash::make($validated['password']),
-            'role'       => 'renter',
-        ]);
-
-        Auth::login($user);
-        $request->session()->regenerate();
-
-        return redirect()->route('home')->with('success', 'Welcome, ' . $user->first_name . '! Your account is ready.');
+        return redirect()->route('register')->with('info', 'Registration is temporarily disabled for UI-only deployment.');
     }
 
     public function logout(Request $request)

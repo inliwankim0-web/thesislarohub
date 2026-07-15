@@ -9,7 +9,7 @@ class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_register_and_is_persisted(): void
+    public function test_registration_is_disabled_for_ui_only_deployment(): void
     {
         $response = $this->post('/register', [
             'first_name' => 'Juan',
@@ -21,11 +21,10 @@ class RegistrationTest extends TestCase
             'terms' => 'on',
         ]);
 
-        $response->assertRedirect('/');
-        $this->assertDatabaseHas('users', [
+        $response->assertRedirect(route('register'));
+        $this->assertDatabaseMissing('users', [
             'email' => 'juan@example.com',
-            'role' => 'renter',
         ]);
-        $this->assertAuthenticated();
+        $this->assertGuest();
     }
 }

@@ -2,19 +2,21 @@
 @section('title', 'Book a Facility — LaroHub')
 @section('content')
 
-<section class="bg-white border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div class="flex items-center gap-2 text-gray-400 text-sm mb-3">
-            <a href="{{ route('home') }}" class="hover:text-gray-600 transition-colors">Home</a>
+<section class="bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div class="flex items-center gap-2 text-slate-300 text-sm mb-4">
+            <a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            <span class="text-gray-700 font-medium">Book a Facility</span>
+            <span class="text-white font-medium">Book a Facility</span>
         </div>
-        <h1 class="text-3xl font-bold text-gray-900 mb-1">Reserve a Court</h1>
-        <p class="text-gray-500 text-sm">Complete the form below to submit your reservation request.</p>
+        <div class="max-w-2xl">
+            <h1 class="text-3xl sm:text-4xl font-black text-white mb-3">Book your next session in minutes</h1>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">Reserve a court, select the right facility, and confirm your booking with a clean, professional flow designed for fast action.</p>
+        </div>
     </div>
 </section>
 
-<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
     @if(session('booking_success'))
     <div class="bg-green-50 border border-green-200 rounded-2xl p-5 mb-8 flex items-start gap-4">
@@ -28,15 +30,21 @@
     </div>
     @endif
 
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-[28px] border border-slate-200 shadow-[0_20px_60px_-20px_rgba(15,23,42,0.25)] overflow-hidden">
         {{-- Form header --}}
-        <div class="px-8 py-5 border-b border-gray-100 flex items-center gap-3">
-            <div class="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center">
-                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <div class="px-6 sm:px-8 py-6 border-b border-slate-100 bg-slate-50/70 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-600/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-900">Facility Booking Form</p>
+                    <p class="text-xs text-gray-500">All fields marked with * are required</p>
+                </div>
             </div>
-            <div>
-                <p class="font-bold text-gray-900">Facility Booking Form</p>
-                <p class="text-xs text-gray-400">All fields marked with * are required</p>
+            <div class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700">
+                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                Fast confirmation
             </div>
         </div>
 
@@ -44,7 +52,7 @@
             @csrf
 
             {{-- Step 1: Personal Info --}}
-            <div class="px-8 py-7">
+            <div class="px-6 sm:px-8 py-7">
                 <div class="flex items-center gap-2.5 mb-6">
                     <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0">1</div>
                     <h2 class="font-bold text-gray-900">Your Information</h2>
@@ -94,7 +102,7 @@
             </div>
 
             {{-- Step 2: Venue & Facility --}}
-            <div class="px-8 py-7">
+            <div class="px-6 sm:px-8 py-7">
                 <div class="flex items-center gap-2.5 mb-6">
                     <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0">2</div>
                     <h2 class="font-bold text-gray-900">Select Venue & Facility</h2>
@@ -120,19 +128,23 @@
                 </div>
 
                 {{-- Pricing preview --}}
-                <div id="pricing-card" class="hidden mt-4 bg-blue-50 border border-blue-100 rounded-xl px-5 py-4 flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                        <div>
-                            <p class="text-xs text-blue-600 font-medium">Rate</p>
-                            <p id="pricing-info" class="text-base font-bold text-blue-900"></p>
+                <div id="pricing-card" class="hidden mt-4 rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 px-5 py-4 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Facility rate</p>
+                                <p id="pricing-info" class="text-base font-bold text-slate-900"></p>
+                            </div>
                         </div>
+                        <a href="{{ route('venues') }}" class="text-sm font-semibold text-blue-700 hover:text-blue-800 transition-colors">View full pricing →</a>
                     </div>
-                    <a href="{{ route('venues') }}" class="text-xs text-blue-600 hover:underline font-medium">View pricing →</a>
                 </div>
-                <div id="pricing-hint" class="mt-4 flex items-center gap-2 text-xs text-gray-400">
-                    <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Select a venue to see available facilities and pricing
+                <div id="pricing-hint" class="mt-4 flex items-center gap-2 text-sm text-slate-500">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Choose a venue and facility to preview the hourly rate.
                 </div>
             </div>
 
@@ -162,7 +174,7 @@
             function showPrice() {
                 const o = fs.options[fs.selectedIndex];
                 if (!o || !o.dataset.price) { pc.classList.add('hidden'); ph.classList.remove('hidden'); return; }
-                pi.textContent = '₱' + Number(o.dataset.price).toLocaleString() + ' / hr';
+                pi.textContent = '₱' + Number(o.dataset.price).toLocaleString() + ' / hour';
                 ph.classList.add('hidden'); pc.classList.remove('hidden');
             }
             vs.addEventListener('change', () => loadFacilities(vs.value));
@@ -171,7 +183,7 @@
             </script>
 
             {{-- Step 3: Schedule --}}
-            <div class="px-8 py-7">
+            <div class="px-6 sm:px-8 py-7">
                 <div class="flex items-center gap-2.5 mb-6">
                     <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0">3</div>
                     <h2 class="font-bold text-gray-900">Schedule</h2>
@@ -201,7 +213,7 @@
             </div>
 
             {{-- Step 4: Payment --}}
-            <div class="px-8 py-7">
+            <div class="px-6 sm:px-8 py-7">
                 <div class="flex items-center gap-2.5 mb-6">
                     <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0">4</div>
                     <h2 class="font-bold text-gray-900">Payment</h2>
@@ -230,9 +242,9 @@
             </div>
 
             {{-- Submit --}}
-            <div class="px-8 py-5 bg-gray-50 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-gray-400">By submitting, you agree to the booking terms and conditions.</p>
-                <button type="submit" class="btn-primary w-full sm:w-auto">
+            <div class="px-6 sm:px-8 py-5 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-gray-500">By submitting, you agree to the booking terms and conditions.</p>
+                <button type="submit" class="btn-primary w-full sm:w-auto rounded-2xl">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     Confirm Reservation
                 </button>

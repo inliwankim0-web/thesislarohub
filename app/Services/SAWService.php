@@ -6,27 +6,25 @@ use App\Models\Venue;
 use App\Models\Facility;
 
 /**
- * Simple Additive Weighting (SAW) — exact methodology from the research.
+ * Simple Additive Weighting (SAW) — updated weights per research revision.
  *
- * Fixed weights:
- *   W_rating   = 0.50  (benefit  → facility_rating / max_rating)
- *   W_price    = 0.30  (cost     → min_price / facility_price)
- *   W_distance = 0.20  (cost     → min_distance / facility_distance)
+ * Weights (sum = 1.0):
+ *   W_price    = 0.50  (cost     → min_price / facility_price)
+ *   W_distance = 0.25  (cost     → min_distance / facility_distance)
+ *   W_rating   = 0.25  (benefit  → facility_rating / max_rating)
  *
  * Formula per facility i:
- *   Score_i = (W_rating × R_rating) + (W_price × R_price) + (W_distance × R_distance)
- *
- * Normalization:
- *   R_rating   = facility_rating   / max(all ratings)      ← benefit
- *   R_price    = min(all prices)   / facility_price        ← cost
- *   R_distance = min(all distances)/ facility_distance     ← cost
+ *   Score_i = (W_price × R_price) + (W_distance × R_distance) + (W_rating × R_rating)
  */
 class SAWService
 {
-    // Fixed weights (must sum to 1.0)
-    const W_RATING   = 0.50;
-    const W_PRICE    = 0.30;
-    const W_DISTANCE = 0.20;
+    // Updated weights per research revision:
+    //   W_price    = 0.50  (cost     → min_price / facility_price)
+    //   W_distance = 0.25  (cost     → min_distance / facility_distance)
+    //   W_rating   = 0.25  (benefit  → facility_rating / max_rating)
+    const W_PRICE    = 0.50;
+    const W_DISTANCE = 0.25;
+    const W_RATING   = 0.25;
 
     /**
      * @param  string      $sport       e.g. "Basketball"
@@ -197,11 +195,11 @@ class SAWService
                 $item['R_distance'] = round($minDist / $item['distance'], 4);
             }
 
-            // SAW Score = (W_rating × R_rating) + (W_price × R_price) + (W_distance × R_distance)
+            // SAW Score = (W_price × R_price) + (W_distance × R_distance) + (W_rating × R_rating)
             $item['saw_score'] = round(
-                (self::W_RATING   * $item['R_rating'])   +
                 (self::W_PRICE    * $item['R_price'])    +
-                (self::W_DISTANCE * $item['R_distance']),
+                (self::W_DISTANCE * $item['R_distance']) +
+                (self::W_RATING   * $item['R_rating']),
                 4
             );
         }

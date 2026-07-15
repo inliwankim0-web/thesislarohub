@@ -1,3 +1,15 @@
+# ---------- Build frontend ----------
+FROM node:22 AS frontend
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+
+# ---------- PHP ----------
 FROM php:8.3-cli
 
 RUN apt-get update && apt-get install -y \
@@ -10,14 +22,13 @@ WORKDIR /var/www/html
 
 COPY . .
 
+COPY --from=frontend /app/public/build ./public/build
+
 RUN composer install --no-dev --optimize-autoloader
 
-RUN cp .env.example .env || true
+RUN cp .env.example .env
 
-RUN php artisan key:generate --force || true
-
-RUN npm install
-RUN npm run build
+RUN php artisan key:generate --force
 
 EXPOSE 10000
 
